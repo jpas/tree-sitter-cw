@@ -1,0 +1,21 @@
+#! /usr/bin/env bash
+
+STELLARIS_DIRS=(
+  "$HOME/.local/share/Steam/steamapps/common/Stellaris"
+  "$HOME/.local/share/Paradox Launcher/games/stellaris"
+)
+
+if [[ -z "${STELLARIS_DIR+x}" ]]; then
+  for d in "${STELLARIS_DIRS[@]}"; do
+    if [[ -x "$d/stellaris" ]]; then
+      STELLARIS_DIR="$d"
+      break
+    fi
+  done
+fi
+
+tree-sitter parse "$@" \
+  "$STELLARIS_DIR/common/*.txt" \
+  "$STELLARIS_DIR/events/*.txt" \
+  "$STELLARIS_DIR/map/*.txt" \
+  "$STELLARIS_DIR/prescripted_countries/*.txt"
